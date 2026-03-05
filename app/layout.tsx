@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Consultoria para Consultórios | Renata Folloni",
+  title: "Renata Folloni | Assessoria Digital",
   description: "Estruturo a operação de consultórios para gerar mais pacientes, organização e previsibilidade.",
 };
 
