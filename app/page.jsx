@@ -406,7 +406,7 @@ function Hero() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#fe6601] animate-pulse" />
             </span>
             <span className="font-mono text-[0.62rem] text-[#fe6601]/80 font-medium tracking-[0.18em] uppercase">
-              Para médicos, psicólogos e nutricionistas
+              Para profissionais da área da saúde
             </span>
           </motion.div>
 
