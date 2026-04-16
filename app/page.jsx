@@ -406,14 +406,14 @@ function Hero() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#fe6601] animate-pulse" />
             </span>
             <span className="font-mono text-[0.62rem] text-[#fe6601]/80 font-medium tracking-[0.18em] uppercase">
-              Para profissionais da área da saúde
+              Para profissionais e negócios
             </span>
           </motion.div>
 
           <motion.h1 variants={motion_fadeUp} initial="hidden" animate="show" custom={1}
             className="font-display text-[clamp(3rem,5.8vw,4.6rem)] leading-[1.0] tracking-[-0.02em] text-white mb-6"
           >
-            Seu consultório
+            Seu negócio
             <br />
             <em className="text-[#fe6601] not-italic italic">crescendo.</em>
             <br />
@@ -425,14 +425,14 @@ function Hero() {
           <motion.p variants={motion_fadeUp} initial="hidden" animate="show" custom={2}
             className="font-sans font-light text-white/50 text-[1rem] leading-[1.85] max-w-[430px] mb-9"
           >
-            Estruturo a operação do seu consultório para que você pare de apagar
+            Estruturo a operação do seu negócio para que você pare de apagar
             incêndios e comece a ter tempo, clareza e previsibilidade.
           </motion.p>
 
           <motion.ul variants={motion_fadeUp} initial="hidden" animate="show" custom={3} className="space-y-3.5 mb-11">
             {[
               ["Menos retrabalho",     "processos que rodam sem você"],
-              ["Mais pacientes ideais", "posicionamento e funis que convertem"],
+              ["Mais clientes ideais", "posicionamento e funis que convertem"],
               ["Operação previsível",  "WhatsApp, CRM e agenda integrados"],
             ].map(([bold, rest]) => (
               <li key={bold} className="flex items-start gap-3">
@@ -503,12 +503,12 @@ function Hero() {
                   <br />operação está travando.
                 </h3>
                 <p className="font-sans font-light text-white/38 text-[0.84rem] leading-[1.7] mb-7">
-                Em 20 minutos no WhatsApp te ajudo a identificar o principal gargalo da sua operação — e qual o próximo passo para resolver.
+                Em poucos minutos já conseguimos mapear os principais gargalos da sua operação — e o próximo passo para resolver.
                 </p>
 
                 <CTAButton size="sm" full />
                 <p className="text-center font-sans text-[0.62rem] text-white/22 mt-2.5">
-                  Sem compromisso. Sem bot. Atendimento pessoal.
+                  Sem compromisso. Atendimento pessoal.
                 </p>
 
                 <div className="mt-6 pt-5 border-t border-white/[0.07] grid grid-cols-2">
@@ -547,7 +547,7 @@ function Hero() {
 const STATS = [
   ["20+", "Negócios estruturados"],
   ["5+",  "Anos de especialização"],
-  ["10+", "Especialidades atendidas"],
+  ["10+", "Nichos atendidos"],
   ["2–4", "Semanas p/ 1ºs resultados"],
 ];
 
@@ -578,11 +578,11 @@ function TrustBar() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const PROBLEMS = [
-  { n: "01", title: "Agenda cheia, dinheiro curto",  body: "Atende muito, cobra pouco, perde tempo com processos manuais. O esforço não se traduz em resultado." },
-  { n: "02", title: "Cada coisa depende de você",    body: "Agendamento, confirmação, follow-up, conteúdo — não existe operação, existe você fazendo tudo." },
+  { n: "01", title: "Agenda cheia, dinheiro curto",  body: "Trabalha muito, cobra pouco, perde tempo com processos manuais. O esforço não se traduz em resultado." },
+  { n: "02", title: "Cada coisa depende de você",    body: "Agenda, confirmação, follow-up, conteúdo — não existe operação, existe você fazendo tudo." },
   { n: "03", title: "Não sabe como se posicionar",   body: "Precisa de presença digital mas não sabe comunicar seu diferencial sem parecer vendedor." },
   { n: "04", title: "Ferramentas que não conversam", body: "Instagram, WhatsApp, planilha, CRM — tudo solto, sem funil, gerando retrabalho todo dia." },
-  { n: "05", title: "Crescer parece impossível",     body: "Mais pacientes = mais caos. Você está no limite e pensar em expandir dá medo, não esperança." },
+  { n: "05", title: "Crescer parece impossível",     body: "Mais clientes = mais caos. Você está no limite e pensar em expandir dá medo, não esperança." },
   { n: "06", title: "Falta tempo estratégico",       body: "O dia termina e você só cumpriu urgências. Nunca sobra espaço para construir o que imagina." },
 ];
 
@@ -606,7 +606,7 @@ function Problema() {
             <br /><span className="text-white/32">Mas o negócio ainda trava.</span>
           </h2>
           <p className="font-sans font-light text-white/38 text-[0.95rem] leading-[1.8]">
-            A faculdade te ensinou a atender. Não te ensinou a operar um negócio.
+            Você domina o que você faz. Mas não foi treinado para estruturar um negócio.
           </p>
         </motion.div>
 
@@ -637,9 +637,9 @@ function Problema() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const PILLARS = [
-  { IconComp: Icon.Process, title: "Processos & Operação",   body: "Mapeio e redesenho todos os fluxos operacionais, eliminando gargalos e retrabalho invisíveis." },
-  { IconComp: Icon.Bolt,    title: "Automação & WhatsApp",   body: "Fluxos automáticos de agendamento, confirmação, cobrança e follow-up sem intervenção manual." },
-  { IconComp: Icon.Target,  title: "Posicionamento Digital", body: "Mensagem central, proposta de valor e estratégia de comunicação que atrai o paciente ideal." },
+  { IconComp: Icon.Process, title: "Processos & Operação",   body: "Mapeio e redesenho os fluxos operacionais, eliminando gargalos e retrabalho invisíveis." },
+  { IconComp: Icon.Bolt,    title: "Automação & WhatsApp",   body: "Agentes de IA, fluxos automáticos de agenda, confirmação, cobrança e follow-up sem intervenção manual." },
+  { IconComp: Icon.Target,  title: "Posicionamento Digital", body: "Mensagem central, proposta de valor e estratégia de comunicação que atrai o cliente ideal." },
   { IconComp: Icon.Chart,   title: "Funis & Ferramentas",    body: "CRM, funil de captação e métricas integradas — tudo conectado, monitorado e com dados reais." },
 ];
 
@@ -663,10 +663,10 @@ function Solucao() {
 
           <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={1} className="lg:pt-2">
             <p className="font-sans font-light text-[#5c5c5c] text-[0.97rem] leading-[1.85] mb-4">
-              Não é gestão de redes sociais. Não é mais uma ferramenta ou curso. É a estrutura real que o seu consultório precisa para funcionar com previsibilidade.
+              Não é gestão de redes sociais. Não é mais uma ferramenta ou curso. É a estrutura real que o seu negócio precisa para funcionar com previsibilidade.
             </p>
             <p className="font-sans font-light text-[#5c5c5c] text-[0.97rem] leading-[1.85] mb-8">
-              Mapeio sua operação atual, identifico onde tempo e dinheiro estão vazando, e implemento junto com você os sistemas que resolvem isso de verdade.
+              Mapeio sua operação atual, identifico onde tempo e dinheiro estão vazando, e implemento com você os sistemas que resolvem isso de verdade.
             </p>
             <CTAButton />
             <p className="mt-2.5 font-sans text-[0.67rem] text-[#9a9a9a]">Respondo em até 2h no horário comercial</p>
@@ -698,9 +698,9 @@ function Solucao() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const AUDIENCES = [
-  { emoji: "🩺", label: "Médicos & Especialistas",     pain: "Agenda lotada mas faturamento estagnado?",    body: "Estruturo sua operação para que cada consulta converta melhor e o consultório cresça de forma previsível." },
-  { emoji: "🧠", label: "Psicólogos & Terapeutas",     pain: "Perde pacientes por falta de acompanhamento?", body: "Automações e fluxos de WhatsApp que mantêm sua agenda cheia sem esforço manual." },
-  { emoji: "🥦", label: "Nutricionistas & Solos Premium", pain: "Quer cobrar mais e atrair quem valoriza?",  body: "Posicionamento e funis que comunicam seu diferencial real e convertem pacientes ideais." },
+  { emoji: "🩺", label: "Profissionais da Saúde",     pain: "Agenda lotada mas faturamento estagnado?",    body: "	Estruturo sua operação para que cada atendimento converta melhor e o negócio cresça com previsibilidade." },
+  { emoji: "📐", label: "Arquitetos & Designers",     pain: "Muitos projetos, mas operação desorganizada?", body: "Organizo atendimento, propostas e fluxo de clientes para você crescer sem depender de você em tudo." },
+  { emoji: "📈", label: "Negócios em crescimento", pain: "Quer crescer, mas tudo depende de você?",  body: "	Estruturo processos, marketing e automações para escalar seu negócio com previsibilidade e sem sobrecarga." },
 ];
 
 function ParaQuem() {
@@ -718,7 +718,7 @@ function ParaQuem() {
             <br /><em className="text-[#fe6601] not-italic italic">e quer que o negócio acompanhe.</em>
           </h2>
           <p className="font-sans font-light text-[#6a6a6a] text-[0.95rem] leading-[1.8]">
-            Trabalho com profissionais que já têm pacientes, reputação e vontade de crescer — mas estão travados na operação.
+            Trabalho com profissionais que já têm clientes, reputação e vontade de crescer — mas estão travados na operação.
           </p>
         </motion.div>
 
@@ -748,10 +748,10 @@ function ParaQuem() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const STEPS = [
-  { n: "01", title: "Você me manda uma mensagem",      body: "Conta em 2 minutos o que está travando. Sem formulário, sem call. Respondo o mesmo dia." },
-  { n: "02", title: "Recebe a proposta personalizada", body: "Preparo uma apresentação com diagnóstico, plano de estruturação e investimento detalhado." },
-  { n: "03", title: "Mergulhamos na sua operação",     body: "Analiso processos, ferramentas, comunicação e funis. Você entende onde perde tempo e dinheiro." },
-  { n: "04", title: "Construímos e implementamos",     body: "Com acompanhamento próximo, os sistemas ficam prontos e rodando — sem dependência minha." },
+  { n: "01", title: "Você me manda uma mensagem",      body: "Conta em poucos minutos o que está travando. Sem formulário, sem call. Comece a organizar sua operação agora." },
+  { n: "02", title: "Recebe a proposta personalizada", body: "Preparo uma apresentação com diagnóstico, plano de estruturação e plano de crescimento." },
+  { n: "03", title: "Mergulhamos na sua operação",     body: "Analiso processos, ferramentas, marketing, comunicação e funis. Você entende onde perde tempo e dinheiro." },
+  { n: "04", title: "Construímos e implementamos",     body: "Com acompanhamento próximo, os sistemas ficam rodando com mais autonomia e menos dependência de você." },
 ];
 
 function Processo() {
@@ -850,7 +850,7 @@ function Depoimentos() {
 // SOBRE
 // ─────────────────────────────────────────────────────────────────────────────
 
-const TAGS = ["Processos", "Automação", "Posicionamento", "Funis", "WhatsApp Flows", "CRM", "Operação Digital"];
+const TAGS = ["Processos", "Automação", "Posicionamento", "Funis", "Agentes de IA", "WhatsApp", "CRM", "Operação Digital"];
 
 function Sobre() {
   const [ref, inView] = useReveal();
@@ -877,14 +877,14 @@ function Sobre() {
           <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={1}>
             <EyebrowLabel align="left">Sobre mim</EyebrowLabel>
             <h2 className="font-display text-[clamp(1.9rem,3.2vw,2.6rem)] leading-[1.06] tracking-[-0.02em] text-[#041e37] mt-1 mb-7">
-              Especialista em fazer
-              <br />o consultório funcionar
-              <br /><em className="text-[#fe6601] not-italic italic">sem depender de você.</em>
+              Especialista em transformar
+              <br />operações travadas <em></em>
+              <br /><em className="text-[#fe6601] not-italic italic">negócios que crescem com estrutura.</em>
             </h2>
             <div className="space-y-4 mb-8">
               {[
-                "Nos últimos anos, liderei operações de Customer Success e Customer Experience — de estruturas enxutas até operações com milhões de clientes — sempre com o mesmo foco: simplificar o que é complexo e transformar gargalos em processos que funcionam. Meu trabalho envolve estruturar a jornada do cliente e também a jornada do profissional, para que o negócio cresça de forma organizada e sustentável.",
-                "Não vendo ferramenta. Não vendo curso. Entro na sua realidade, entendo onde está travando, e construo junto com você um sistema que você consegue operar — e manter — sem depender de mim.",
+                "Nos últimos anos, liderei operações de Customer Success e Customer Experience — de estruturas enxutas até operações com milhões de clientes — sempre com o mesmo foco: simplificar o que é complexo e transformar gargalos em processos que funcionam. Meu trabalho envolve estruturar a jornada do cliente e também a jornada da operação, para que o negócio cresça de forma organizada e sustentável.",
+                "Não vendo ferramenta. Não vendo curso. Entro na sua realidade, entendo onde está travando, e construo junto com você um sistema que você consegue operar — e escalar — com o autonomia",
                 "O padrão que vejo em quem chega até mim é sempre o mesmo: excelente profissional, operação frágil. É exatamente isso que eu venho resolver.",
               ].map((text, i) => (
                 <p key={i} className="font-sans font-light text-[#6a6a6a] text-[0.95rem] leading-[1.85]">{text}</p>
@@ -912,8 +912,8 @@ const FAQS = [
   { q: "Preciso ter uma equipe para implementar?",                             a: "Depende. Grande parte do meu trabalho é justamente reduzir a dependência de pessoas. Construo sistemas que você opera sozinho ou com uma equipe enxuta." },
   { q: "É consultoria pontual ou acompanhamento contínuo?",                   a: "Ofereço as duas modalidades. Existe um formato de projeto com início, meio e fim — e um formato de acompanhamento contínuo para quem precisa de uma parceira estratégica no dia a dia." },
   { q: "Já tentei automações antes e não funcionou. Por que seria diferente?", a: "Porque ferramenta sem processo não resolve nada. Começo sempre pelo processo — a ferramenta vem depois, e aí ela funciona." },
-  { q: "Qual é o investimento mínimo para trabalhar com você?",               a: "Não divulgo valores na página. Na nossa conversa você recebe uma proposta clara com tudo detalhado — sem surpresas." },
-  { q: "Como começo? O que acontece quando mando mensagem no WhatsApp?",     a: "Você me conta brevemente o que está travando. Respondo pessoalmente — sem bot. Se fizer sentido avançar, preparo e envio uma apresentação personalizada. Tudo no WhatsApp, sem call obrigatória." },
+  { q: "Qual é o investimento mínimo para trabalhar com você?",               a: "Não divulgo valores na página, já que cada projeto é personalizado e diferente do outro. Na nossa conversa você recebe uma proposta clara com tudo detalhado — sem surpresas." },
+  { q: "Como começo? O que acontece quando mando mensagem no WhatsApp?",     a: "Você me conta brevemente o que está travando. Respondo pessoalmente. Se fizer sentido avançar, preparo e envio uma apresentação personalizada. Tudo no WhatsApp, sem call obrigatória." },
 ];
 
 function FAQItem({ q, a, i, inView }) {
@@ -991,11 +991,11 @@ function FinalCTA() {
         <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={0}>
           <EyebrowLabel>Uma conversa muda tudo</EyebrowLabel>
           <h2 className="font-display text-[clamp(2.2rem,4.8vw,3.8rem)] leading-[1.03] tracking-[-0.025em] text-white mt-1 mb-5">
-            Seu consultório pode ser
+            Seu negócio pode ser
             <br /><em className="text-[#fe6601] not-italic italic">diferente daqui a 30 dias.</em>
           </h2>
           <p className="font-sans font-light text-white/40 text-[1rem] leading-[1.85] max-w-[400px] mx-auto mb-11">
-            Manda uma mensagem agora. Em menos de 20 minutos conseguimos olhar rapidamente sua operação e entender onde a jornada do cliente ou do profissional pode estar travando.
+            Manda uma mensagem agora. Em poucos minutos conseguimos olhar rapidamente sua operação e entender onde sua operação e a jornada do cliente estão travando.
           </p>
         </motion.div>
         <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={1} className="flex flex-col items-center gap-5">
