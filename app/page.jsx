@@ -1,359 +1,17 @@
 "use client";
-/**
- * RenataFolloniLanding.jsx — v3 Premium
- * ─────────────────────────────────────────────────────────────────────────────
- * Stack: Next.js · Tailwind CSS · Framer Motion
- *
- * FONT SETUP — add to app/layout.jsx:
- * ─────────────────────────────────────────────────────────────────────────────
- * import { Instrument_Serif, DM_Sans, DM_Mono } from "next/font/google";
- *
- * const instrumentSerif = Instrument_Serif({
- *   subsets: ["latin"], weight: ["400"], style: ["normal","italic"],
- *   variable: "--font-display", display: "swap",
- * });
- * const dmSans = DM_Sans({
- *   subsets: ["latin"], weight: ["300","400","500","600","700"],
- *   variable: "--font-sans", display: "swap",
- * });
- * const dmMono = DM_Mono({
- *   subsets: ["latin"], weight: ["400","500"],
- *   variable: "--font-mono", display: "swap",
- * });
- *
- * export default function RootLayout({ children }) {
- *   return (
- *     <html lang="pt-BR" className={`${instrumentSerif.variable} ${dmSans.variable} ${dmMono.variable}`}>
- *       <body>{children}</body>
- *     </html>
- *   );
- * }
- *
- * TAILWIND CONFIG — tailwind.config.js:
- * ─────────────────────────────────────────────────────────────────────────────
- * theme: {
- *   extend: {
- *     fontFamily: {
- *       display: ["var(--font-display)", "Georgia", "serif"],
- *       sans:    ["var(--font-sans)", "system-ui", "sans-serif"],
- *       mono:    ["var(--font-mono)", "monospace"],
- *     },
- *   }
- * }
- *
- * ICON SUGGESTIONS (lucide-react):
- * ─────────────────────────────────────────────────────────────────────────────
- * - ClipboardList  → Processos & Operação
- * - Zap            → Automação & WhatsApp
- * - Target         → Posicionamento Digital
- * - TrendingUp     → Funis & Ferramentas
- * - CheckCircle2   → Benefit bullets
- * - Clock4         → Response time microcopy
- *
- * Replace inline SVGs below with lucide-react imports for production:
- * import { Zap, Target, ClipboardList, TrendingUp } from "lucide-react";
- */
 
-"use client";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useInView,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { CTAButton } from "./_components/cta-button";
+import { Icon } from "./_components/icons";
+import { EyebrowLabel, DotTexture, GraphPaper, TopoRings } from "./_components/backgrounds";
+import { FAQAccordion } from "./_components/faq-accordion";
+import { useReveal } from "./_lib/use-reveal";
+import { motion_fadeUp, motion_scaleIn } from "./_lib/motion";
 
-import { Instagram } from "lucide-react";
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CONSTANTS
-// ─────────────────────────────────────────────────────────────────────────────
-
-const WA_URL =
-  "https://wa.me/5511926786357?text=Ol%C3%A1%20Renata%21%20Vim%20pelo%20seu%20site%20e%20gostaria%20de%20entender%20melhor%20como%20funciona%20sua%20assessoria.";
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ANIMATION SYSTEM
-// ─────────────────────────────────────────────────────────────────────────────
-
-const ease = [0.16, 1, 0.3, 1]; // expo ease-out
-
-const motion_fadeUp = {
-  hidden:  { opacity: 0, y: 24 },
-  show:    (i = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: i * 0.1, ease },
-  }),
-};
-
-const motion_scaleIn = {
-  hidden:  { opacity: 0, scale: 0.94, y: 12 },
-  show:    (i = 0) => ({
-    opacity: 1, scale: 1, y: 0,
-    transition: { duration: 0.65, delay: i * 0.09, ease },
-  }),
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// HOOK
-// ─────────────────────────────────────────────────────────────────────────────
-
-function useReveal(amount = 0.12) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount });
-  return [ref, inView];
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ICONS — inline SVG (replace with lucide-react in production)
-// ─────────────────────────────────────────────────────────────────────────────
-
-const Icon = {
-  WA: ({ cls = "w-5 h-5" }) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={cls}>
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  ),
-  Check: ({ cls = "w-3 h-3" }) => (
-    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" className={cls}>
-      <polyline points="1.5,6 4.5,9 10.5,3"/>
-    </svg>
-  ),
-  Clock: ({ cls = "w-3 h-3" }) => (
-    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" className={cls}>
-      <circle cx="6" cy="6" r="5"/><path d="M6 3.5V6l1.5 1.5"/>
-    </svg>
-  ),
-  Process: ({ cls = "w-5 h-5" }) => (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className={cls}>
-      <rect x="3" y="4" width="14" height="12" rx="2"/>
-      <path d="M7 4V2M13 4V2M3 8h14M7 12h2M11 12h2" strokeLinecap="round"/>
-    </svg>
-  ),
-  Bolt: ({ cls = "w-5 h-5" }) => (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className={cls}>
-      <path d="M11.5 2L4 11h6.5L8.5 18 16 9h-6.5L11.5 2z" strokeLinejoin="round"/>
-    </svg>
-  ),
-  Target: ({ cls = "w-5 h-5" }) => (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className={cls}>
-      <circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="3.5"/>
-      <line x1="10" y1="1" x2="10" y2="4"/><line x1="10" y1="16" x2="10" y2="19"/>
-      <line x1="1" y1="10" x2="4" y2="10"/><line x1="16" y1="10" x2="19" y2="10"/>
-    </svg>
-  ),
-  Chart: ({ cls = "w-5 h-5" }) => (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className={cls}>
-      <polyline points="2,14 6,10 10,12 16,5" strokeLinecap="round" strokeLinejoin="round"/>
-      <line x1="1" y1="18" x2="19" y2="18" strokeLinecap="round"/>
-    </svg>
-  ),
-  Info: ({ cls = "w-4 h-4" }) => (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className={cls}>
-      <circle cx="8" cy="8" r="6.5"/>
-      <line x1="8" y1="5.5" x2="8" y2="5.6" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="8" y1="7.5" x2="8" y2="11" strokeLinecap="round"/>
-    </svg>
-  ),
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SHARED: Section eyebrow label
-// ─────────────────────────────────────────────────────────────────────────────
-
-function EyebrowLabel({ children, align = "center" }) {
-  return (
-    <div className={`flex items-center gap-2.5 mb-5 ${align === "center" ? "justify-center" : ""}`}>
-      <span className="h-px w-5 rounded-full bg-[#fe6601]/45" />
-      <span className="font-mono text-[0.6rem] font-medium tracking-[0.22em] uppercase leading-none text-[#fe6601]/75">
-        {children}
-      </span>
-      <span className="h-px w-5 rounded-full bg-[#fe6601]/45" />
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SHARED: Primary CTA button
-// ─────────────────────────────────────────────────────────────────────────────
-
-function CTAButton({ size = "md", full = false, className = "" }) {
-  const sizes = {
-    sm: "px-5 py-2.5 text-[0.82rem] gap-2",
-    md: "px-6 py-[0.85rem] text-[0.9rem] gap-2.5",
-    lg: "px-8 py-[1.05rem] text-[0.97rem] gap-3",
-  };
-
-  return (
-    <motion.a
-      href={WA_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      whileHover={{ scale: 1.025, boxShadow: "0 16px 48px rgba(254,102,1,0.45)" }}
-      whileTap={{ scale: 0.975 }}
-      transition={{ duration: 0.18 }}
-      className={[
-        "inline-flex items-center font-sans font-semibold rounded-xl cursor-pointer",
-        "bg-[#fe6601] text-white",
-        "border border-[rgba(255,255,255,0.12)]",
-        "shadow-[0_4px_20px_rgba(254,102,1,0.32),inset_0_1px_0_rgba(255,255,255,0.18)]",
-        "transition-shadow duration-200",
-        sizes[size],
-        full ? "w-full justify-center" : "",
-        className,
-      ].join(" ")}
-    >
-      <Icon.WA cls={size === "sm" ? "w-[1em] h-[1em]" : "w-[1.15em] h-[1.15em]"} />
-      Falar comigo no WhatsApp
-    </motion.a>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SHARED: Background textures
-// ─────────────────────────────────────────────────────────────────────────────
-
-function DotTexture({ opacity = 0.03, spacing = 28 }) {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0"
-      style={{
-        backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px)",
-        backgroundSize: `${spacing}px ${spacing}px`,
-        opacity,
-      }}
-    />
-  );
-}
-
-function GraphPaper({ opacity = 0.04 }) {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0"
-      style={{
-        backgroundImage: [
-          "linear-gradient(rgba(255,255,255,0.55) 1px, transparent 1px)",
-          "linear-gradient(90deg, rgba(255,255,255,0.55) 1px, transparent 1px)",
-          "linear-gradient(rgba(255,255,255,0.18) 1px, transparent 1px)",
-          "linear-gradient(90deg, rgba(255,255,255,0.18) 1px, transparent 1px)",
-        ].join(","),
-        backgroundSize: "120px 120px, 120px 120px, 24px 24px, 24px 24px",
-        opacity,
-      }}
-    />
-  );
-}
-
-function TopoRings({ className = "", stroke = "rgba(254,102,1,0.07)", radii = [50, 90, 136, 188, 248, 316, 392] }) {
-  return (
-    <svg aria-hidden viewBox="0 0 500 500" className={`pointer-events-none ${className}`}>
-      <g fill="none" stroke={stroke} strokeWidth="1">
-        {radii.map((r) => (
-          <ellipse key={r} cx="250" cy="250" rx={r} ry={Math.round(r * 0.75)} />
-        ))}
-      </g>
-    </svg>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// FLOATING WHATSAPP
-// ─────────────────────────────────────────────────────────────────────────────
-
-function FloatingWA() {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 440);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.a
-          href={WA_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Abrir WhatsApp"
-          initial={{ opacity: 0, scale: 0.5, y: 16 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.5, y: 16 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          transition={{ type: "spring", stiffness: 380, damping: 26 }}
-          className="fixed bottom-6 right-6 z-50 w-[54px] h-[54px] rounded-full
-            bg-[#fe6601] text-white flex items-center justify-center
-            shadow-[0_8px_32px_rgba(254,102,1,0.55)]"
-        >
-          <Icon.WA cls="w-6 h-6" />
-          <motion.span
-            aria-hidden
-            animate={{ scale: [1, 1.55, 1], opacity: [0.55, 0, 0.55] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 rounded-full bg-[#fe6601]/40"
-          />
-        </motion.a>
-      )}
-    </AnimatePresence>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// NAV
-// ─────────────────────────────────────────────────────────────────────────────
-
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 32);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-
-  return (
-    <motion.header
-      initial={{ y: -72, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease }}
-      className={[
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-[#041e37]/90 backdrop-blur-xl border-b border-white/[0.07] shadow-[0_4px_32px_rgba(0,0,0,0.3)]"
-          : "bg-transparent",
-      ].join(" ")}
-    >
-      <div className="max-w-[1120px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2.5 group">
-        
-          <img
-  src="/logo-renata-folloni.png"
-  alt="Renata Folloni"
-  className="h-25 w-auto"
-/>
-        </a>
-
-        <nav className="hidden md:flex items-center gap-7">
-          {[
-            { href: "#solucao", label: "O que faço" },
-            { href: "#sobre",   label: "Sobre" },
-            { href: "#faq",     label: "Perguntas" },
-          ].map(({ href, label }) => (
-            <a key={href} href={href} className="font-sans text-[0.84rem] text-white/40 hover:text-white/80 transition-colors duration-200">
-              {label}
-            </a>
-          ))}
-        </nav>
-
-        <CTAButton size="sm" />
-      </div>
-    </motion.header>
-  );
-}
+const MotionLink = motion.create(Link);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // HERO
@@ -393,47 +51,46 @@ function Hero() {
 
       <motion.div
         style={{ y: contentY, opacity: contentOp }}
-        className="relative z-10 max-w-[1120px] mx-auto px-5 sm:px-8 pt-28 pb-16
+        className="relative z-10 max-w-[1120px] mx-auto px-5 sm:px-8 pt-24 pb-12
           grid lg:grid-cols-[1.15fr_0.85fr] gap-10 xl:gap-16 items-center w-full"
       >
         {/* LEFT */}
-        <div>
+        <div className="min-w-0">
           <motion.div variants={motion_fadeUp} initial="hidden" animate="show" custom={0}
-            className="inline-flex items-center gap-2 mb-9 pl-1.5 pr-4 py-1.5 rounded-full
+            className="inline-flex max-w-full items-center gap-2 mb-5 pl-1.5 pr-4 py-1.5 rounded-full
               border border-[rgba(254,102,1,0.24)] bg-[rgba(254,102,1,0.08)]"
           >
-            <span className="w-5 h-5 rounded-full bg-[rgba(254,102,1,0.16)] flex items-center justify-center">
+            <span className="w-5 h-5 flex-shrink-0 rounded-full bg-[rgba(254,102,1,0.16)] flex items-center justify-center">
               <span className="w-1.5 h-1.5 rounded-full bg-[#fe6601] animate-pulse" />
             </span>
-            <span className="font-mono text-[0.62rem] text-[#fe6601]/80 font-medium tracking-[0.18em] uppercase">
-              Para profissionais e negócios
+            <span className="font-mono text-[0.62rem] text-[#fe6601]/80 font-medium tracking-[0.18em] uppercase whitespace-normal">
+              Para profissionais e pequenos negócios
             </span>
           </motion.div>
 
           <motion.h1 variants={motion_fadeUp} initial="hidden" animate="show" custom={1}
-            className="font-display text-[clamp(3rem,5.8vw,4.6rem)] leading-[1.0] tracking-[-0.02em] text-white mb-6"
+            className="font-display text-[clamp(1.8rem,3.6vw,2.7rem)] leading-[1.15] tracking-[-0.02em] text-white mb-4"
           >
-            Seu negócio
+            Você não precisa entender de tecnologia.
             <br />
-            <em className="text-[#fe6601] not-italic italic">crescendo.</em>
-            <br />
-            <span className="text-white/35 font-display text-[clamp(2.4rem,4.6vw,3.6rem)]">
-              Sem você no centro.
-            </span>
+            <em className="text-[#fe6601] not-italic italic">
+              Precisa de alguém que saiba aplicá-la no seu negócio.
+            </em>
           </motion.h1>
 
           <motion.p variants={motion_fadeUp} initial="hidden" animate="show" custom={2}
-            className="font-sans font-light text-white/50 text-[1rem] leading-[1.85] max-w-[430px] mb-9"
+            className="font-sans font-light text-white/50 text-[0.94rem] leading-[1.7] max-w-[430px] mb-6"
           >
-            Estruturo a operação do seu negócio para que você pare de apagar
-            incêndios e comece a ter tempo, clareza e previsibilidade.
+            Eu entendo como o seu negócio funciona, identifico onde você perde
+            tempo e oportunidades, e aplico tecnologia, IA e automação para
+            tornar sua operação mais simples, organizada e eficiente.
           </motion.p>
 
-          <motion.ul variants={motion_fadeUp} initial="hidden" animate="show" custom={3} className="space-y-3.5 mb-11">
+          <motion.ul variants={motion_fadeUp} initial="hidden" animate="show" custom={3} className="space-y-2 mb-7">
             {[
-              ["Menos retrabalho",     "processos que rodam sem você"],
-              ["Mais clientes ideais", "posicionamento e funis que convertem"],
-              ["Operação previsível",  "WhatsApp, CRM e agenda integrados"],
+              ["Menos tarefa manual",  "a tecnologia certa cuidando do que é repetitivo"],
+              ["Mensagem clara",       "um posicionamento que atrai quem você quer atender"],
+              ["Operação previsível",  "tudo rodando integrado, sem depender só de você"],
             ].map(([bold, rest]) => (
               <li key={bold} className="flex items-start gap-3">
                 <span className="mt-[2px] w-[18px] h-[18px] flex-shrink-0 rounded-[5px] flex items-center justify-center text-[#fe6601] bg-[rgba(254,102,1,0.13)] border border-[rgba(254,102,1,0.28)]">
@@ -474,7 +131,7 @@ function Hero() {
 
         {/* RIGHT — Glass card */}
         <motion.div variants={motion_scaleIn} initial="hidden" animate="show" custom={1}
-          className="hidden lg:flex items-center justify-center"
+          className="min-w-0 hidden lg:flex items-center justify-center"
         >
           <div className="relative w-full max-w-[340px]">
             {[310, 420].map((s) => (
@@ -499,7 +156,7 @@ function Hero() {
                 </div>
 
                 <h3 className="font-display text-white text-[1.55rem] leading-[1.1] tracking-[-0.01em] mb-3">
-                  Descubre onde sua
+                  Descubra onde sua
                   <br />operação está travando.
                 </h3>
                 <p className="font-sans font-light text-white/38 text-[0.84rem] leading-[1.7] mb-7">
@@ -510,15 +167,6 @@ function Hero() {
                 <p className="text-center font-sans text-[0.62rem] text-white/22 mt-2.5">
                   Sem compromisso. Atendimento pessoal.
                 </p>
-
-                <div className="mt-6 pt-5 border-t border-white/[0.07] grid grid-cols-2">
-                  {[["20+", "Negócios estruturados"], ["10+", "Anos de experiência em negócios digitais"]].map(([num, label], i) => (
-                    <div key={num} className={`text-center px-3 ${i === 0 ? "border-r border-white/[0.07]" : ""}`}>
-                      <div className="font-display text-[#fe6601] text-[1.9rem] leading-none tracking-[-0.02em]">{num}</div>
-                      <div className="font-mono text-white/25 text-[0.57rem] tracking-widest uppercase mt-1.5">{label}</div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </motion.div>
           </div>
@@ -544,11 +192,11 @@ function Hero() {
 // TRUST BAR
 // ─────────────────────────────────────────────────────────────────────────────
 
-const STATS = [
-  ["20+", "Negócios estruturados"],
-  ["5+",  "Anos de especialização"],
-  ["10+", "Nichos atendidos"],
-  ["2–4", "Semanas p/ 1ºs resultados"],
+const TRUST_ITEMS = [
+  "Tecnologia aplicada com estratégia",
+  "Experiência em Customer Success e CX",
+  "Atendimento pessoal, direto no WhatsApp",
+  "Projetos sob medida, sem pacote fechado",
 ];
 
 function TrustBar() {
@@ -559,12 +207,11 @@ function TrustBar() {
         style={{ background: "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(254,102,1,0.07) 0%, transparent 65%)" }} />
       <div className="relative z-10 border-y border-white/[0.07] max-w-[1120px] mx-auto px-5 sm:px-8 py-7">
         <div className="flex flex-wrap justify-center">
-          {STATS.map(([num, label], i) => (
-            <motion.div key={num} variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={i}
-              className="flex-1 min-w-[130px] text-center px-4 sm:px-8 py-2.5 [&:not(:last-child)]:border-r border-white/[0.07]"
+          {TRUST_ITEMS.map((item, i) => (
+            <motion.div key={item} variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={i}
+              className="flex-1 min-w-[160px] text-center px-4 sm:px-8 py-3 [&:not(:last-child)]:border-r border-white/[0.07]"
             >
-              <div className="font-display text-[#fe6601] text-[1.9rem] leading-none tracking-[-0.02em]">{num}</div>
-              <div className="font-mono text-white/30 text-[0.59rem] tracking-widest uppercase mt-1.5">{label}</div>
+              <div className="font-sans font-light text-white/70 text-[0.83rem] leading-snug">{item}</div>
             </motion.div>
           ))}
         </div>
@@ -578,12 +225,12 @@ function TrustBar() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const PROBLEMS = [
-  { n: "01", title: "Agenda cheia, dinheiro curto",  body: "Trabalha muito, cobra pouco, perde tempo com processos manuais. O esforço não se traduz em resultado." },
-  { n: "02", title: "Cada coisa depende de você",    body: "Agenda, confirmação, follow-up, conteúdo — não existe operação, existe você fazendo tudo." },
-  { n: "03", title: "Não sabe como se posicionar",   body: "Precisa de presença digital mas não sabe comunicar seu diferencial sem parecer vendedor." },
-  { n: "04", title: "Ferramentas que não conversam", body: "Instagram, WhatsApp, planilha, CRM — tudo solto, sem funil, gerando retrabalho todo dia." },
-  { n: "05", title: "Crescer parece impossível",     body: "Mais clientes = mais caos. Você está no limite e pensar em expandir dá medo, não esperança." },
-  { n: "06", title: "Falta tempo estratégico",       body: "O dia termina e você só cumpriu urgências. Nunca sobra espaço para construir o que imagina." },
+  { n: "01", title: "Tarefas manuais tomando seu tempo", body: "Rotina cheia de tarefas repetitivas que consomem o tempo que podia ir pro que só você sabe fazer." },
+  { n: "02", title: "Tudo depende de você",              body: "Agenda, atendimento, financeiro, decisões — se você para um dia, o negócio para junto." },
+  { n: "03", title: "WhatsApp e agenda desorganizados",  body: "Confirmação, lembrete e retorno de contato acontecendo (ou não) na base da sorte." },
+  { n: "04", title: "Ferramentas que não conversam",     body: "Instagram, WhatsApp, planilha, agenda — cada uma isolada, gerando retrabalho todo dia." },
+  { n: "05", title: "Falta tempo estratégico",           body: "O dia termina e você só cumpriu urgência. Nunca sobra espaço pra construir o que imagina pro negócio." },
+  { n: "06", title: "Crescer parece só aumentar o caos", body: "Mais clientes hoje significa mais confusão, não mais estrutura — e isso trava a vontade de crescer." },
 ];
 
 function Problema() {
@@ -602,11 +249,11 @@ function Problema() {
         >
           <EyebrowLabel>Reconhece algum desses?</EyebrowLabel>
           <h2 className="font-display text-[clamp(2rem,4vw,3rem)] leading-[1.05] tracking-[-0.02em] text-white mb-4">
-            Você é excelente no que faz.
-            <br /><span className="text-white/32">Mas o negócio ainda trava.</span>
+            Você domina o seu trabalho.
+            <br /><span className="text-white/32">Mas não foi treinado para administrar todas as partes de um negócio.</span>
           </h2>
           <p className="font-sans font-light text-white/38 text-[0.95rem] leading-[1.8]">
-            Você domina o que você faz. Mas não foi treinado para estruturar um negócio.
+            Você não precisa aprender tudo isso. Precisa de uma estrutura que trabalhe a seu favor.
           </p>
         </motion.div>
 
@@ -637,10 +284,10 @@ function Problema() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const PILLARS = [
-  { IconComp: Icon.Process, title: "Processos & Operação",   body: "Mapeio e redesenho os fluxos operacionais, eliminando gargalos e retrabalho invisíveis." },
-  { IconComp: Icon.Bolt,    title: "Automação & WhatsApp",   body: "Agentes de IA, fluxos automáticos de agenda, confirmação, cobrança e follow-up sem intervenção manual." },
-  { IconComp: Icon.Target,  title: "Posicionamento Digital", body: "Mensagem central, proposta de valor e estratégia de comunicação que atrai o cliente ideal." },
-  { IconComp: Icon.Chart,   title: "Funis & Ferramentas",    body: "CRM, funil de captação e métricas integradas — tudo conectado, monitorado e com dados reais." },
+  { IconComp: Icon.Process, title: "Processos & Operação",   body: "Automatizo nota fiscal, cobrança e conciliação — pra você saber quanto entra e quanto sai sem caçar isso numa planilha.", href: "/servicos/financeiro-e-processos" },
+  { IconComp: Icon.Bolt,    title: "Automação & WhatsApp",   body: "Organizo canais, confirmações e agenda — pra você parar de perder tempo (e cliente) na correria do dia a dia.", href: "/servicos/atendimento-e-agenda" },
+  { IconComp: Icon.Target,  title: "Presença Digital & Marketing", body: "Defino sua mensagem central e estruturo site, conteúdo e captação pra atrair quem você quer atender.", href: "/servicos/presenca-digital-e-marketing" },
+  { IconComp: Icon.Chart,   title: "Ferramentas sob medida",       body: "Quando nenhuma ferramenta pronta resolve, construo agentes de IA e ferramentas desenhadas pro seu processo específico.", href: "/servicos/ferramentas-sob-medida" },
 ];
 
 function Solucao() {
@@ -663,10 +310,10 @@ function Solucao() {
 
           <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={1} className="lg:pt-2">
             <p className="font-sans font-light text-[#5c5c5c] text-[0.97rem] leading-[1.85] mb-4">
-              Não é gestão de redes sociais. Não é mais uma ferramenta ou curso. É a estrutura real que o seu negócio precisa para funcionar com previsibilidade.
+              Não é gestão de redes sociais. Não é mais uma ferramenta ou curso. Não é uma consultoria genérica de negócios.
             </p>
             <p className="font-sans font-light text-[#5c5c5c] text-[0.97rem] leading-[1.85] mb-8">
-              Mapeio sua operação atual, identifico onde tempo e dinheiro estão vazando, e implemento com você os sistemas que resolvem isso de verdade.
+              Eu entro na sua operação, entendo o que está travando e encontro a tecnologia certa — automação, IA, integrações — para resolver isso na prática, com você.
             </p>
             <CTAButton />
             <p className="mt-2.5 font-sans text-[0.67rem] text-[#9a9a9a]">Respondo em até 2h no horário comercial</p>
@@ -674,20 +321,25 @@ function Solucao() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {PILLARS.map(({ IconComp, title, body }, i) => (
-            <motion.div key={title} variants={motion_scaleIn} initial="hidden" animate={inView ? "show" : "hidden"} custom={i + 2}
+          {PILLARS.map(({ IconComp, title, body, href }, i) => (
+            <MotionLink key={title} href={href} variants={motion_scaleIn} initial="hidden" animate={inView ? "show" : "hidden"} custom={i + 2}
               whileHover={{ y: -5, borderColor: "rgba(254,102,1,0.35)", boxShadow: "0 18px 44px rgba(4,30,55,0.11)" }}
               transition={{ duration: 0.22 }}
-              className="rounded-xl border border-[rgba(4,30,55,0.09)] bg-[#f7f8fa] p-6 cursor-default group"
+              className="block rounded-xl border border-[rgba(4,30,55,0.09)] bg-[#f7f8fa] p-6 cursor-pointer group"
             >
               <div className="w-10 h-10 rounded-xl mb-5 flex items-center justify-center bg-[rgba(254,102,1,0.1)] border border-[rgba(254,102,1,0.2)] text-[#fe6601] group-hover:bg-[rgba(254,102,1,0.18)] transition-colors duration-300">
                 <IconComp />
               </div>
               <h4 className="font-sans font-semibold text-[#041e37] text-[0.92rem] mb-2 leading-snug">{title}</h4>
-              <p className="font-sans font-light text-[#6a6a6a] text-[0.8rem] leading-[1.68]">{body}</p>
-            </motion.div>
+              <p className="font-sans font-light text-[#6a6a6a] text-[0.8rem] leading-[1.68] mb-3">{body}</p>
+              <span className="font-mono text-[0.6rem] font-medium tracking-[0.14em] uppercase text-[#fe6601]">Ver serviço →</span>
+            </MotionLink>
           ))}
         </div>
+
+        <p className="mt-8 text-center font-sans font-light text-[#9a9a9a] text-[0.83rem] leading-relaxed">
+          Eu combino essas frentes de acordo com o que o seu negócio realmente precisa — sem pacote fechado.
+        </p>
       </div>
     </section>
   );
@@ -698,9 +350,25 @@ function Solucao() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const AUDIENCES = [
-  { emoji: "🩺", label: "Profissionais da Saúde",     pain: "Agenda lotada mas faturamento estagnado?",    body: "	Estruturo sua operação para que cada atendimento converta melhor e o negócio cresça com previsibilidade." },
-  { emoji: "📐", label: "Arquitetos & Designers",     pain: "Muitos projetos, mas operação desorganizada?", body: "Organizo atendimento, propostas e fluxo de clientes para você crescer sem depender de você em tudo." },
-  { emoji: "📈", label: "Negócios em crescimento", pain: "Quer crescer, mas tudo depende de você?",  body: "	Estruturo processos, marketing e automações para escalar seu negócio com previsibilidade e sem sobrecarga." },
+  {
+    emoji: "🩺",
+    label: "Profissionais da saúde",
+    pain: "Agenda cheia, mas a operação ainda depende 100% de você?",
+    body: "Médicos, psicólogos, nutricionistas, fisioterapeutas, dentistas e outros profissionais que querem organizar a operação sem perder o foco no atendimento.",
+    featured: true,
+  },
+  {
+    emoji: "💼",
+    label: "Profissionais autônomos",
+    pain: "Já tem clientes e experiência, mas ainda faz tudo sozinho?",
+    body: "Especialistas — de arquitetos e designers a outros profissionais liberais — que já têm reputação, mas ainda dependem demais do próprio esforço pro negócio funcionar.",
+  },
+  {
+    emoji: "📈",
+    label: "Pequenos negócios em crescimento",
+    pain: "Cresceu, mas a estrutura não acompanhou?",
+    body: "Negócios que já têm demanda e agora precisam de processos, tecnologia e automação pra sustentar o próximo passo sem aumentar o caos.",
+  },
 ];
 
 function ParaQuem() {
@@ -718,18 +386,24 @@ function ParaQuem() {
             <br /><em className="text-[#fe6601] not-italic italic">e quer que o negócio acompanhe.</em>
           </h2>
           <p className="font-sans font-light text-[#6a6a6a] text-[0.95rem] leading-[1.8]">
-            Trabalho com profissionais que já têm clientes, reputação e vontade de crescer — mas estão travados na operação.
+            Meu foco hoje é ajudar profissionais da saúde a transformar tecnologia em uma operação mais simples, organizada e eficiente — mas atendo outros perfis também.
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-5">
-          {AUDIENCES.map(({ emoji, label, pain, body }, i) => (
+          {AUDIENCES.map(({ emoji, label, pain, body, featured }, i) => (
             <motion.div key={label} variants={motion_scaleIn} initial="hidden" animate={inView ? "show" : "hidden"} custom={i}
               whileHover={{ y: -5, borderColor: "rgba(254,102,1,0.3)", boxShadow: "0 18px 44px rgba(4,30,55,0.1)" }}
               transition={{ duration: 0.22 }}
-              className="bg-white rounded-2xl border border-[rgba(4,30,55,0.08)] p-8 text-center cursor-default group"
+              className={[
+                "relative rounded-2xl border p-8 text-center cursor-default group",
+                featured ? "bg-[rgba(254,102,1,0.035)] border-[rgba(254,102,1,0.32)]" : "bg-white border-[rgba(4,30,55,0.08)]",
+              ].join(" ")}
             >
-              <div className="w-14 h-14 mx-auto mb-6 rounded-2xl text-[1.8rem] flex items-center justify-center bg-[rgba(254,102,1,0.09)] group-hover:bg-[rgba(254,102,1,0.16)] transition-colors duration-300">
+              <div className={[
+                "w-14 h-14 mx-auto mb-6 rounded-2xl text-[1.8rem] flex items-center justify-center transition-colors duration-300",
+                featured ? "bg-[rgba(254,102,1,0.16)] group-hover:bg-[rgba(254,102,1,0.22)]" : "bg-[rgba(254,102,1,0.09)] group-hover:bg-[rgba(254,102,1,0.16)]",
+              ].join(" ")}>
                 {emoji}
               </div>
               <h3 className="font-sans font-semibold text-[#041e37] text-[0.97rem] mb-2">{label}</h3>
@@ -748,10 +422,10 @@ function ParaQuem() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const STEPS = [
-  { n: "01", title: "Você me manda uma mensagem",      body: "Conta em poucos minutos o que está travando. Sem formulário, sem call. Comece a organizar sua operação agora." },
-  { n: "02", title: "Recebe a proposta personalizada", body: "Preparo uma apresentação com diagnóstico, plano de estruturação e plano de crescimento." },
-  { n: "03", title: "Mergulhamos na sua operação",     body: "Analiso processos, ferramentas, marketing, comunicação e funis. Você entende onde perde tempo e dinheiro." },
-  { n: "04", title: "Construímos e implementamos",     body: "Com acompanhamento próximo, os sistemas ficam rodando com mais autonomia e menos dependência de você." },
+  { n: "01", title: "Você me conta onde está travando",         body: "Uma conversa inicial pra entender seu negócio, sua rotina e os problemas que mais consomem seu tempo." },
+  { n: "02", title: "Eu entendo sua operação",                  body: "Mapeio processos, ferramentas, atendimento, comunicação e jornada do cliente." },
+  { n: "03", title: "Identificamos o que pode ser simplificado", body: "Definimos o que faz sentido automatizar, integrar, reorganizar ou melhorar." },
+  { n: "04", title: "Construímos e implementamos",              body: "Eu implemento as soluções necessárias com você e deixo a operação mais simples e autônoma." },
 ];
 
 function Processo() {
@@ -765,11 +439,11 @@ function Processo() {
         <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} className="text-center max-w-xl mx-auto mb-16">
           <EyebrowLabel>Como funciona</EyebrowLabel>
           <h2 className="font-display text-[clamp(2rem,3.8vw,2.9rem)] leading-[1.06] tracking-[-0.02em] text-[#041e37] mb-4">
-            Do WhatsApp à operação
-            <br /><em className="text-[#fe6601] not-italic italic">estruturada em 4 etapas.</em>
+            Do problema à solução.
+            <br /><em className="text-[#fe6601] not-italic italic">Com a tecnologia certa no meio.</em>
           </h2>
           <p className="font-sans font-light text-[#6a6a6a] text-[0.95rem] leading-[1.8]">
-            Sem burocracia. Você começa a ver resultados nas primeiras semanas.
+            Sem burocracia — direto no WhatsApp, do primeiro contato à operação rodando.
           </p>
         </motion.div>
 
@@ -795,53 +469,57 @@ function Processo() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DEPOIMENTOS
+// NA PRÁTICA
 // ─────────────────────────────────────────────────────────────────────────────
 
-const TESTIMONIALS = [
-  { initials: "AM", name: "Dra. Amanda M.", role: "Ginecologista · São Paulo",       quote: "Agenda cheia, mas não sabia para onde ia o dinheiro. A Renata mapeou minha operação e em duas semanas já tinha clareza do que precisava mudar. Hoje meu consultório roda de forma completamente diferente.", result: "Operação estruturada em 2 semanas" },
-  { initials: "RL", name: "Rafael L.",      role: "Psicólogo · Belo Horizonte",      quote: "Lista de espera de 3 meses e eu ainda perdia pacientes por falta de acompanhamento. O fluxo de WhatsApp que a Renata implementou mudou isso completamente.",                                             result: "+60% taxa de retorno de pacientes" },
-  { initials: "CS", name: "Camila S.",      role: "Nutricionista · Rio de Janeiro",  quote: "Depois que estruturei meu posicionamento e as automações, meu faturamento cresceu 40% em 90 dias — sem aumentar atendimentos. Só otimizando o que já tinha.",                                             result: "+40% faturamento em 90 dias" },
+const CLIENTS = [
+  { name: "Conceição Bem Casados", logo: "/logos/conceicao-bem-casados-icon.png", w: 62 },
+  { name: "SL Consultoria", logo: "/logos/sl-consultoria.png", w: 68 },
+  { name: "Casa do Baiano Chico", logo: "/logos/casa-do-baiano-chico.png", w: 44 },
 ];
 
-function Depoimentos() {
+const MARQUEE_ITEMS = [...CLIENTS, ...CLIENTS];
+
+function NaPratica() {
   const [ref, inView] = useReveal();
   return (
-    <section ref={ref} id="depoimentos" className="relative overflow-hidden py-28 sm:py-36" style={{ background: "#f4f5f7" }}>
+    <section ref={ref} id="projetos" className="relative overflow-hidden py-20 sm:py-24" style={{ background: "#f4f5f7" }}>
       <TopoRings className="absolute -left-[7%] -bottom-[7%] w-[460px] h-[460px]" stroke="rgba(4,30,55,0.03)" radii={[55, 98, 148, 205, 270, 342]} />
 
       <div className="relative z-10 max-w-[1120px] mx-auto px-5 sm:px-8">
-        <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} className="text-center max-w-xl mx-auto mb-14">
-          <EyebrowLabel>Depoimentos</EyebrowLabel>
-          <h2 className="font-display text-[clamp(2rem,3.8vw,2.9rem)] leading-[1.06] tracking-[-0.02em] text-[#041e37]">
-            Resultados reais de quem
-            <br /><em className="text-[#fe6601] not-italic italic">estruturou com a Renata.</em>
+        <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} className="text-center max-w-lg mx-auto mb-10">
+          <EyebrowLabel>Quem já confia</EyebrowLabel>
+          <h2 className="font-display text-[clamp(1.6rem,2.8vw,2.1rem)] leading-[1.15] tracking-[-0.02em] text-[#041e37]">
+            Negócios que já aplicam
+            <br /><em className="text-[#fe6601] not-italic italic">tecnologia comigo.</em>
           </h2>
         </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-5">
-          {TESTIMONIALS.map(({ initials, name, role, quote, result }, i) => (
-            <motion.div key={name} variants={motion_scaleIn} initial="hidden" animate={inView ? "show" : "hidden"} custom={i}
-              whileHover={{ y: -5, boxShadow: "0 22px 52px rgba(4,30,55,0.11)" }} transition={{ duration: 0.22 }}
-              className="bg-white rounded-2xl border border-[rgba(4,30,55,0.08)] p-7 flex flex-col cursor-default"
-            >
-              <div className="font-display text-[4.5rem] leading-[0.8] text-[rgba(254,102,1,0.12)] select-none mb-1">"</div>
-              <p className="font-sans font-light text-[#2a2a2a] text-[0.87rem] leading-[1.8] italic mb-5 flex-1">{quote}</p>
-              <div className="flex items-center gap-3 pt-4 border-t border-[rgba(4,30,55,0.07)]">
-                <div className="w-9 h-9 rounded-full bg-[#041e37] text-white font-sans font-bold text-[0.75rem] flex items-center justify-center flex-shrink-0">{initials}</div>
-                <div>
-                  <div className="font-sans font-semibold text-[#041e37] text-[0.84rem] leading-none">{name}</div>
-                  <div className="font-sans text-[#9a9a9a] text-[0.7rem] mt-0.5">{role}</div>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-2.5">
-                <span className="font-mono text-[0.58rem] font-medium tracking-widest uppercase text-[#fe6601] bg-[rgba(254,102,1,0.1)] border border-[rgba(254,102,1,0.2)] px-2.5 py-1 rounded-md flex-shrink-0">Resultado</span>
-                <span className="font-sans text-[0.74rem] text-[#6a6a6a] font-medium">{result}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
+
+      <motion.div
+        variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={1}
+        className="relative z-10 overflow-hidden"
+        style={{
+          WebkitMaskImage: "linear-gradient(90deg, transparent, black 10%, black 90%, transparent)",
+          maskImage: "linear-gradient(90deg, transparent, black 10%, black 90%, transparent)",
+        }}
+      >
+        <motion.div
+          className="flex items-center w-max"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        >
+          {MARQUEE_ITEMS.map(({ name, logo, w }, i) => (
+            <div
+              key={`${name}-${i}`}
+              className="flex-shrink-0 flex items-center gap-3 bg-white rounded-2xl border border-[rgba(4,30,55,0.08)] px-6 py-4 mx-2.5"
+            >
+              <Image src={logo} alt={name} width={w} height={44} className="h-11 w-auto object-contain" />
+              <span className="font-sans font-medium text-[#041e37] text-[0.9rem] whitespace-nowrap">{name}</span>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
@@ -877,15 +555,15 @@ function Sobre() {
           <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={1}>
             <EyebrowLabel align="left">Sobre mim</EyebrowLabel>
             <h2 className="font-display text-[clamp(1.9rem,3.2vw,2.6rem)] leading-[1.06] tracking-[-0.02em] text-[#041e37] mt-1 mb-7">
-              Especialista em transformar
-              <br />operações travadas <em></em>
-              <br /><em className="text-[#fe6601] not-italic italic">negócios que crescem com estrutura.</em>
+              Eu entendo tecnologia.
+              <br />Você entende do seu negócio.
+              <br /><em className="text-[#fe6601] not-italic italic">Meu trabalho é conectar os dois.</em>
             </h2>
             <div className="space-y-4 mb-8">
               {[
-                "Nos últimos anos, liderei operações de Customer Success e Customer Experience — de estruturas enxutas até operações com milhões de clientes — sempre com o mesmo foco: simplificar o que é complexo e transformar gargalos em processos que funcionam. Meu trabalho envolve estruturar a jornada do cliente e também a jornada da operação, para que o negócio cresça de forma organizada e sustentável.",
-                "Não vendo ferramenta. Não vendo curso. Entro na sua realidade, entendo onde está travando, e construo junto com você um sistema que você consegue operar — e escalar — com o autonomia",
-                "O padrão que vejo em quem chega até mim é sempre o mesmo: excelente profissional, operação frágil. É exatamente isso que eu venho resolver.",
+                "Passei os últimos anos liderando operações de Customer Success e Customer Experience — de estruturas enxutas a operações com milhões de clientes — sempre com o mesmo foco: simplificar o que é complexo e transformar gargalos em processos que funcionam. Essa é a minha experiência profissional antes da assessoria, e é ela que aplico hoje no seu negócio.",
+                "Hoje uso essa experiência pra ajudar profissionais e pequenos negócios a aplicar tecnologia, IA e automação de forma prática. Entro na sua realidade, entendo onde está travando, e construo com você um sistema que você consegue operar com autonomia.",
+                "O padrão que vejo, depois de anos observando negócios e operações digitais, é sempre parecido: profissional excelente, operação frágil. Comigo, você não precisa aprender tecnologia — precisa de alguém que saiba aplicá-la.",
               ].map((text, i) => (
                 <p key={i} className="font-sans font-light text-[#6a6a6a] text-[0.95rem] leading-[1.85]">{text}</p>
               ))}
@@ -907,44 +585,18 @@ function Sobre() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const FAQS = [
-  { q: "Quanto tempo leva para ver resultados?",                               a: "Automações de WhatsApp e processos operacionais costumam gerar impacto em 2 a 4 semanas. Posicionamento e funis têm um ciclo de 60 a 90 dias. O que garanto é que cada etapa tem um entregável claro." },
-  { q: "Você faz gestão de redes sociais ou cria conteúdo?",                  a: "Não. O que faço é estruturar a mensagem, o posicionamento e a estratégia de comunicação — para que qualquer produção de conteúdo que você faça seja coerente e converta." },
-  { q: "Preciso ter uma equipe para implementar?",                             a: "Depende. Grande parte do meu trabalho é justamente reduzir a dependência de pessoas. Construo sistemas que você opera sozinho ou com uma equipe enxuta." },
-  { q: "É consultoria pontual ou acompanhamento contínuo?",                   a: "Ofereço as duas modalidades. Existe um formato de projeto com início, meio e fim — e um formato de acompanhamento contínuo para quem precisa de uma parceira estratégica no dia a dia." },
-  { q: "Já tentei automações antes e não funcionou. Por que seria diferente?", a: "Porque ferramenta sem processo não resolve nada. Começo sempre pelo processo — a ferramenta vem depois, e aí ela funciona." },
-  { q: "Qual é o investimento mínimo para trabalhar com você?",               a: "Não divulgo valores na página, já que cada projeto é personalizado e diferente do outro. Na nossa conversa você recebe uma proposta clara com tudo detalhado — sem surpresas." },
-  { q: "Como começo? O que acontece quando mando mensagem no WhatsApp?",     a: "Você me conta brevemente o que está travando. Respondo pessoalmente. Se fizer sentido avançar, preparo e envio uma apresentação personalizada. Tudo no WhatsApp, sem call obrigatória." },
+  { q: "Eu não entendo nada de tecnologia. Posso contratar você?", a: "Sim — é literalmente pra isso que eu existo. Você não precisa entender de tecnologia: eu traduzo tudo pra realidade do seu negócio e cuido da parte técnica." },
+  { q: "Preciso contratar vários softwares?",                      a: "Não necessariamente. Primeiro eu entendo o que você já tem e o que realmente falta — a tecnologia entra só onde resolve um problema real, nunca por padrão." },
+  { q: "Você implementa ou apenas recomenda ferramentas?",         a: "Eu implemento. Não entrego uma lista de sugestões — coloco as soluções pra rodar com você, dentro da sua operação." },
+  { q: "Já tenho ferramentas. Preciso trocar tudo?",               a: "Raramente. Na maioria dos casos o trabalho é integrar e organizar o que você já usa, não substituir tudo por algo novo." },
+  { q: "Preciso ter uma equipe para implementar?",                 a: "Não. Meu trabalho é justamente reduzir a dependência de pessoas — construo sistemas que você opera sozinho ou com uma equipe enxuta." },
+  { q: "Você trabalha com profissionais da saúde?",                a: "Sim, é meu foco principal hoje — médicos, psicólogos, nutricionistas, fisioterapeutas, dentistas e outros profissionais da área." },
+  { q: "Você atende outros nichos?",                                a: "Também. Trabalho com profissionais liberais, arquitetos, designers e pequenos negócios de diferentes segmentos — o método é o mesmo, o que muda é a aplicação." },
+  { q: "Você faz gestão de redes sociais ou cria conteúdo?",       a: "Faço estratégia e produção de conteúdo dentro do serviço de Presença Digital e Marketing — sempre a partir do posicionamento certo, pra cada peça comunicar o que precisa e converter. O que não faço é a gestão do dia a dia das redes (postar, responder comentários) — isso sua equipe consegue tocar depois que a estratégia está definida." },
+  { q: "É consultoria pontual ou implementação?",                  a: "É implementação. Entendo seu negócio, defino o que faz sentido e coloco pra rodar com você — não entrego só um relatório com recomendações." },
+  { q: "Quanto custa?",                                            a: "Não divulgo valores na página, já que cada projeto é personalizado e diferente do outro. Na nossa conversa você recebe uma proposta clara, com escopo e investimento detalhados — sem surpresas." },
+  { q: "Como funciona o primeiro contato?",                        a: "Você me manda uma mensagem no WhatsApp contando brevemente o que está travando. Respondo pessoalmente e, se fizer sentido seguir, te mostro os próximos passos." },
 ];
-
-function FAQItem({ q, a, i, inView }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={i * 0.5}
-      onClick={() => setOpen((v) => !v)}
-      className={[
-        "rounded-xl border overflow-hidden cursor-pointer transition-all duration-300",
-        open ? "border-[rgba(254,102,1,0.32)] shadow-[0_4px_24px_rgba(254,102,1,0.09)]"
-             : "border-[rgba(4,30,55,0.09)] hover:border-[rgba(254,102,1,0.22)]",
-        "bg-white",
-      ].join(" ")}
-    >
-      <div className="flex items-center justify-between gap-4 px-6 py-5">
-        <span className="font-sans font-medium text-[#041e37] text-[0.91rem] leading-snug">{q}</span>
-        <motion.div animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.24, ease }}
-          className={["w-7 h-7 flex-shrink-0 rounded-full flex items-center justify-center font-sans text-xl leading-none font-light transition-colors duration-300",
-            open ? "bg-[#fe6601] text-white" : "bg-[rgba(254,102,1,0.1)] text-[#fe6601]"].join(" ")}
-        >+</motion.div>
-      </div>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} transition={{ duration: 0.32, ease }} className="overflow-hidden">
-            <p className="px-6 pb-6 font-sans font-light text-[#6a6a6a] text-[0.87rem] leading-[1.8]">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
 
 function FAQ() {
   const [ref, inView] = useReveal();
@@ -959,9 +611,7 @@ function FAQ() {
             <br /><em className="text-[#fe6601] not-italic italic">antes de conversar.</em>
           </h2>
         </motion.div>
-        <div className="space-y-3">
-          {FAQS.map((item, i) => <FAQItem key={item.q} {...item} i={i} inView={inView} />)}
-        </div>
+        <FAQAccordion items={FAQS} inView={inView} />
       </div>
     </section>
   );
@@ -991,11 +641,10 @@ function FinalCTA() {
         <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={0}>
           <EyebrowLabel>Uma conversa muda tudo</EyebrowLabel>
           <h2 className="font-display text-[clamp(2.2rem,4.8vw,3.8rem)] leading-[1.03] tracking-[-0.025em] text-white mt-1 mb-5">
-            Seu negócio pode ser
-            <br /><em className="text-[#fe6601] not-italic italic">diferente daqui a 30 dias.</em>
+            <em className="text-[#fe6601] not-italic italic">Vamos simplificar sua operação?</em>
           </h2>
           <p className="font-sans font-light text-white/40 text-[1rem] leading-[1.85] max-w-[400px] mx-auto mb-11">
-            Manda uma mensagem agora. Em poucos minutos conseguimos olhar rapidamente sua operação e entender onde sua operação e a jornada do cliente estão travando.
+            Me conte onde seu negócio está travando. Em poucos minutos já dá pra entender o próximo passo.
           </p>
         </motion.div>
         <motion.div variants={motion_fadeUp} initial="hidden" animate={inView ? "show" : "hidden"} custom={1} className="flex flex-col items-center gap-5">
@@ -1014,55 +663,22 @@ function FinalCTA() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// FOOTER
-// ─────────────────────────────────────────────────────────────────────────────
-
-function Footer() {
-  return (
-    <footer className="relative overflow-hidden bg-[#020c18] py-8">
-      <div aria-hidden className="absolute top-0 inset-x-0 h-px pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(254,102,1,0.4), transparent)" }} />
-      <div className="max-w-[1120px] mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <span className="font-sans text-white/26 text-[0.74rem]">© 2026 Renata Folloni. Todos os direitos reservados.</span>
-        <div className="flex items-center gap-5">
-          <a href="#" className="font-sans text-white/26 text-[0.74rem] hover:text-white/55 transition-colors duration-200">Privacidade</a>
-          <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-sans text-white/26 text-[0.74rem] hover:text-[#fe6601] transition-colors duration-200">WhatsApp</a>
-          <a
-  href="https://instagram.com/renatafolloni"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex items-center gap-2 font-sans text-white/26 text-[0.74rem] hover:text-[#fe6601] transition-colors duration-200"
->
-  <Instagram size={18} />
-</a>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // PAGE ROOT
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function RenataFolloniLanding() {
   return (
-    <>
-      <FloatingWA />
-      <Nav />
-      <main>
-        <Hero />
-        <TrustBar />
-        <Problema />
-        <Solucao />
-        <ParaQuem />
-        <Processo />
-        <Depoimentos />
-        <Sobre />
-        <FAQ />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <Hero />
+      <TrustBar />
+      <Problema />
+      <Solucao />
+      <ParaQuem />
+      <Processo />
+      <NaPratica />
+      <Sobre />
+      <FAQ />
+      <FinalCTA />
+    </main>
   );
 }
