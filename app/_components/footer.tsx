@@ -24,7 +24,7 @@ export function Footer() {
             WhatsApp
           </a>
           <a
-            href="https://instagram.com/renatafolloni"
+            href="https://www.instagram.com/renatafolloni.assessoria/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 font-sans text-white/26 text-[0.74rem] hover:text-[#fe6601] transition-colors duration-200"

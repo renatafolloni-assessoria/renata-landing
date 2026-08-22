@@ -37,7 +37,7 @@ const organizationJsonLd = {
   name: "Renata Folloni Assessoria Digital",
   url: SITE_URL,
   telephone: "+5511926786357",
-  sameAs: ["https://instagram.com/renatafolloni"],
+  sameAs: ["https://www.instagram.com/renatafolloni.assessoria/"],
 };
 
 export default function RootLayout({
