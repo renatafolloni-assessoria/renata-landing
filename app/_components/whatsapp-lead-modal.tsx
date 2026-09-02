@@ -108,6 +108,20 @@ export function WhatsAppLeadModal() {
     window.open(url, "_blank", "noopener,noreferrer");
     reportWhatsAppConversion();
 
+    // Fire-and-forget: não trava nem quebra o redirecionamento pro WhatsApp se o Notion falhar.
+    fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        company: form.company.trim(),
+        segment: segmentLabel,
+        size: sizeLabel,
+        page: window.location.pathname,
+      }),
+    }).catch(() => {});
+
     setForm(EMPTY_FORM);
     closeLeadForm();
   }
