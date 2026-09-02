@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { WA_URL } from "../_lib/constants";
+import { useWhatsAppLead } from "./whatsapp-lead-context";
 import { Icon } from "./icons";
 
 export function FloatingWA() {
   const [visible, setVisible] = useState(false);
+  const { openLeadForm } = useWhatsAppLead();
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 440);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -16,10 +17,9 @@ export function FloatingWA() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.a
-          href={WA_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <motion.button
+          type="button"
+          onClick={openLeadForm}
           aria-label="Abrir WhatsApp"
           initial={{ opacity: 0, scale: 0.5, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -38,7 +38,7 @@ export function FloatingWA() {
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             className="absolute inset-0 rounded-full bg-[#fe6601]/40"
           />
-        </motion.a>
+        </motion.button>
       )}
     </AnimatePresence>
   );
