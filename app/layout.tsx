@@ -5,6 +5,8 @@ import "./globals.css";
 import { Nav } from "./_components/nav";
 import { Footer } from "./_components/footer";
 import { FloatingWA } from "./_components/floating-wa";
+import { WhatsAppLeadProvider } from "./_components/whatsapp-lead-context";
+import { WhatsAppLeadModal } from "./_components/whatsapp-lead-modal";
 import { SITE_URL } from "./_lib/constants";
 
 const geistSans = Geist({
@@ -68,10 +70,13 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <FloatingWA />
-        <Nav />
-        {children}
-        <Footer />
+        <WhatsAppLeadProvider>
+          <WhatsAppLeadModal />
+          <FloatingWA />
+          <Nav />
+          {children}
+          <Footer />
+        </WhatsAppLeadProvider>
       </body>
     </html>
   );

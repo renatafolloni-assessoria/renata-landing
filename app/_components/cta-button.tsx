@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { WA_URL } from "../_lib/constants";
+import { useWhatsAppLead } from "./whatsapp-lead-context";
 import { Icon } from "./icons";
 
 export function CTAButton({
@@ -15,6 +15,7 @@ export function CTAButton({
   className?: string;
   label?: string;
 }) {
+  const { openLeadForm } = useWhatsAppLead();
   const sizes = {
     sm: "px-5 py-2.5 text-[0.82rem] gap-2",
     md: "px-6 py-[0.85rem] text-[0.9rem] gap-2.5",
@@ -22,10 +23,9 @@ export function CTAButton({
   };
 
   return (
-    <motion.a
-      href={WA_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.button
+      type="button"
+      onClick={openLeadForm}
       whileHover={{ scale: 1.025, boxShadow: "0 16px 48px rgba(254,102,1,0.45)" }}
       whileTap={{ scale: 0.975 }}
       transition={{ duration: 0.18 }}
@@ -42,6 +42,6 @@ export function CTAButton({
     >
       <Icon.WA cls={size === "sm" ? "w-[1em] h-[1em]" : "w-[1.15em] h-[1.15em]"} />
       {label}
-    </motion.a>
+    </motion.button>
   );
 }
