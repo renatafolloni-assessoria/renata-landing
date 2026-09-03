@@ -5,7 +5,7 @@ declare global {
   }
 }
 
-const WHATSAPP_LEAD_CONVERSION = "AW-18423578950/QKK_CI3RjOwcEMaChtFE";
+const WHATSAPP_LEAD_CONVERSION = "AW-18423578950/JUhiCL-hwe0cEMaChtFE";
 
 export function reportWhatsAppConversion() {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;
