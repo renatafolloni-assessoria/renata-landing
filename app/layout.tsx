@@ -64,6 +64,7 @@ export default function RootLayout({
             gtag('js', new Date());
 
             gtag('config', 'AW-18423578950');
+            gtag('config', 'G-T2YQQ66ZHY');
           `}
         </Script>
         <script
